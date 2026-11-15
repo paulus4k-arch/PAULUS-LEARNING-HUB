@@ -14,10 +14,12 @@ WHAT IS INCLUDED
 - Additive Supabase migration for profile metadata, student directory, materials,
   announcements, storage bucket and access policies.
 
-IMPORTANT — THIS ZIP DOES NOT CONTAIN YOUR PRIVATE SUPABASE CONFIG
-Keep your existing config.js and your existing Supabase project. Never publish a
-service-role key. The browser config must contain only the Supabase project URL
-and anon/public key.
+SUPABASE CONFIGURATION INCLUDED
+This ZIP includes config.js populated with the Supabase project URL, the publishable
+key you supplied, and your WhatsApp contact link. A Supabase publishable key is
+intended for browser use; never put a service_role/secret key in this file.
+Keep Row Level Security (RLS) enabled and review the supplied SQL policies before
+deployment.
 
 DEPLOYMENT
 1. Back up your Supabase project.
@@ -30,8 +32,8 @@ DEPLOYMENT
 5. Replace index.html, app.js and styles.css in the ROOT of your existing GitHub
    repository with the files in this ZIP.
 6. Upload the new supabase/paulus-learning-hub-migration.sql file.
-7. Keep config.js and your existing Supabase project settings. Do not overwrite
-   them with placeholders.
+7. Keep the included config.js. It is already set to your new Paulus Supabase
+   project and WhatsApp link. Do not replace it with your old Arena config.
 8. Wait for Netlify to redeploy, then test registration, student login, admin
    login, student filtering, material upload and announcements.
 
@@ -53,6 +55,6 @@ SCHEMA CHECK
 The migration assumes your existing public.profiles table has id, full_name,
 role and index_number columns, as used by the original app. If your live schema
 differs, do not run it blindly; share the current schema/migration export so it
-can be adapted safely. The original archive did not include config.js or the
-full original database schema, so the ZIP cannot independently verify your live
-Supabase setup.
+can be adapted safely. The original archive did not include the full original database schema, so the ZIP
+cannot independently verify your live Supabase setup. Confirm that your new project
+contains the existing Arena quiz tables/functions expected by app.js before testing.
