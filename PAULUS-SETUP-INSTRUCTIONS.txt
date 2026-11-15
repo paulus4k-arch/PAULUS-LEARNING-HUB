@@ -1,0 +1,58 @@
+PAULUS LEARNING HUB — UPDATE PACKAGE
+
+WHAT IS INCLUDED
+- PAULUS LEARNING HUB branding and animated wordmark.
+- Animated login/registration panel and form feedback.
+- Self-registration fields: full name, email, password, department and class.
+- The six requested departments and Form 1/Form 2/Form 3 choices.
+- Student dashboard profile details.
+- Administrator student directory with search and department/class filters.
+- Realtime refresh of the admin directory when profiles change (enable Supabase Realtime).
+- Learning material upload and department/class targeting.
+- Announcements targeted to all students or a department/class.
+- Existing quiz/competition and bulk CSV question upload retained.
+- Additive Supabase migration for profile metadata, student directory, materials,
+  announcements, storage bucket and access policies.
+
+IMPORTANT — THIS ZIP DOES NOT CONTAIN YOUR PRIVATE SUPABASE CONFIG
+Keep your existing config.js and your existing Supabase project. Never publish a
+service-role key. The browser config must contain only the Supabase project URL
+and anon/public key.
+
+DEPLOYMENT
+1. Back up your Supabase project.
+2. Open Supabase SQL Editor and run:
+   supabase/paulus-learning-hub-migration.sql
+3. In Supabase, ensure your administrator account has:
+   public.profiles.role = 'admin'
+   Do not make every student an administrator.
+4. In Supabase Database > Publications, enable Realtime for public.profiles.
+5. Replace index.html, app.js and styles.css in the ROOT of your existing GitHub
+   repository with the files in this ZIP.
+6. Upload the new supabase/paulus-learning-hub-migration.sql file.
+7. Keep config.js and your existing Supabase project settings. Do not overwrite
+   them with placeholders.
+8. Wait for Netlify to redeploy, then test registration, student login, admin
+   login, student filtering, material upload and announcements.
+
+ADMIN ACCOUNT
+The migration does not create an administrator or promote a student. Use your
+existing trusted administrator account and confirm its profiles.role is 'admin'.
+New self-registered accounts remain students.
+
+CURRENT FUNCTIONAL SCOPE / IMPORTANT LIMITATIONS
+This update adds the student registration fields, student directory, targeted
+learning materials, announcements and keeps the existing quiz/score system.
+The original ZIP was a CSDF 1B Arena quiz application, not a complete LMS.
+It did not contain modules for question-and-answer messaging, notifications,
+full student-account editing/deactivation, or detailed per-student assessment
+analytics. Those features are not silently represented as complete in this
+update; they require additional database tables, policies and interface work.
+
+SCHEMA CHECK
+The migration assumes your existing public.profiles table has id, full_name,
+role and index_number columns, as used by the original app. If your live schema
+differs, do not run it blindly; share the current schema/migration export so it
+can be adapted safely. The original archive did not include config.js or the
+full original database schema, so the ZIP cannot independently verify your live
+Supabase setup.
